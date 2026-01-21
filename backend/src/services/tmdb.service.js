@@ -9,7 +9,6 @@ export const searchMovies =async(query)=>{
     try{
         console.log(query);
         const {data} = await httpClient.get(`https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=true&language=en-US&page=1`);
-        console.log(data);
         return data;
     }
     catch(error){
