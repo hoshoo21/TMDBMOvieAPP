@@ -14,6 +14,7 @@ export const searchMovies =async(query)=>{
     }
     catch(error){
         console.log(error);
+        
     }
 }
 
