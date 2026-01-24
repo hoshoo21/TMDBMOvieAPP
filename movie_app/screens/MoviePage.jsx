@@ -17,15 +17,13 @@ const MoviePage =(props)=>{
    
     const allMovies = Object.values(state.search_results.data).flat();
 
-    // 2. Iterate to show titles
     allMovies.forEach(movie => {
-        console.log(movie.title);
+   //     console.log(movie.title);
     });
 
     const search_results = Object.keys(state.search_results.data)
     .sort((a, b) => Number(a) - Number(b)) // Forces numerical order: 1, 2, 3...
     .flatMap((pageKey) => state.search_results.data[pageKey]);
-    console.log("result updated");
     
     const endReached = pageRef.current >= totalPages;
  

@@ -8,11 +8,11 @@ const initialState = {
     data: {},        // { pageNumber: [movies] }
     total_pages: 0,
     total_results:0,
-    
-   
+      
     loading: false,
     error: null,
-    }
+    },
+    movie_details: {}
 };
 
 export const MediaContext =createContext(initialState);

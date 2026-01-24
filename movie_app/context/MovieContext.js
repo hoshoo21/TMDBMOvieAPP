@@ -25,7 +25,6 @@ const listMovies=(dispatch)=>{
             console.log(`/api/movies/search?query=${query}&page=${page}`);
             const resp = await instance.get(`/api/movies/search?query=${query}&page=${page}`);
 
-            console.log(resp.data.total_results)
             dispatch({type:'List_Movies', 
                 payload:resp.data.results, 
                 page:page,

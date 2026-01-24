@@ -1,6 +1,5 @@
 
 export const mediaReducer = (state, action) => {
-    console.log(action);
     switch (action.type) {
       case "SET_LOADING":
         return {
@@ -33,7 +32,24 @@ export const mediaReducer = (state, action) => {
             total_results: 0,
           },
         };
-  
+
+      case "SET_MOVIE_CAST":
+       
+        return{
+            ...state,
+            movie_details: {
+                ...state.movie_details,
+                [action.payload.movie_id]: {
+                    ...state.movie_details[action.payload.movie_id], 
+                    cast: action.payload.cast,
+                    crew :action.payload.crew,
+                    cast_loaded: true
+                }
+            }
+        
+
+        } 
+       
       case "SET_SEARCH_RESULTS":
         return {
           ...state,
