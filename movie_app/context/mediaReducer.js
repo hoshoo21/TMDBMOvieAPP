@@ -1,6 +1,6 @@
 
 export const mediaReducer = (state, action) => {
-    switch (action.type) {
+  switch (action.type) {
       case "SET_LOADING":
         return {
           ...state,
@@ -50,6 +50,22 @@ export const mediaReducer = (state, action) => {
 
         } 
        
+        case "SET_ACTOR_DETAILS":
+       
+        return{
+            ...state,
+            actor_detail: {
+                ...state.actor_detail,
+                [action.payload.id]: {
+                    movies: action.payload.movies,
+                    details :action.payload.details,
+                    movies_loading: false
+                }
+            }
+        
+
+        } 
+         
       case "SET_SEARCH_RESULTS":
         return {
           ...state,

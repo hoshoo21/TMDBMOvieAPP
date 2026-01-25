@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useMemo } from "react";
-import {View,Text,Image, StyleSheet} from 'react-native';
+import {View,Text,Image, StyleSheet, TouchableOpacity} from 'react-native';
 import { MediaContext } from "../context/mediaContext";
 import { useMediaActions } from "../context/useMediaActions";
 import { searchCast } from "../context/actions/castAction";
 import UniversalList from "./Components/UniversalList";
 import { ScrollView } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 const DetailPage=({route})=>{
     const {item} = route.params;
     const {state} = useContext(MediaContext);
     const {searchCast} = useMediaActions();
-    
+    const navigation = useNavigation();
     useEffect(()=>{
         if (!state.movie_details?.cast){
           searchCast(item.id);
@@ -46,12 +47,19 @@ const DetailPage=({route})=>{
               //`https://image.tmdb.org/t/p/w500/zSQoqg39mF0x6kZScAdyHbPlniQ.jpg
               renderItem={({item})=>(
                 <View style={styles.castAvatar}>
-               <Image 
-                source={{ uri: `https://image.tmdb.org/t/p/w300${item.profile_path}`}}
-                style={styles.image}
-            />
-                 <Text style={styles.name}>{item.name}</Text>
-                <Text style = {styles.character} >as {item.character}</Text>  
+                 <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={()=>navigation.navigate("ActorDetails", {item})}
+                 
+                 >
+                  <Image 
+                      source={{ uri: `https://image.tmdb.org/t/p/w300${item.profile_path}`}}
+                      style={styles.image}
+                      />
+                  
+                  </TouchableOpacity> 
+                     <Text style={styles.name}>{item.name}</Text>
+                   <Text style = {styles.character} >as {item.character}</Text>  
                 </View>
               )}
               ></UniversalList>

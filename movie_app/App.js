@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { MediaProvider } from './context/mediaContext';
 import MoviePage from './screens/MoviePage';
 import DetailPage from './screens/DetailPage'
+import ActorDetails from './screens/ActorDetails';
 
 
 const Stack = createNativeStackNavigator();
@@ -16,6 +17,7 @@ const MovieStack =()=> {
     <Stack.Navigator initialRouteName="MoviePage">
       <Stack.Screen name="MoviePage" component={MoviePage} />
       <Stack.Screen name="DetailPage" component={DetailPage} />
+      <Stack.Screen name = "ActorDetails" component={ActorDetails} />
     </Stack.Navigator>
   );
 

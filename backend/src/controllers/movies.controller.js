@@ -37,7 +37,7 @@ export const getActorDetail = async(req,res,next)=>{
                                                     getActorMovies(name,page)   
                                                      ]);           
             if (details.status == "fulfilled"){
-                Object.assign(payload, details.value);
+              payload.details = details.value;
             }
             if (movies.status == "fulfilled") {
                 payload.movies = movies.value;

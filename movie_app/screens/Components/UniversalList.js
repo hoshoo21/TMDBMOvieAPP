@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleSheet, FlatList, Text, ActivityIndicator} from "react-native";
+import { StyleSheet, View, FlatList, Text,ListHeaderComponent, ActivityIndicator} from "react-native";
 const UniversalList =(
     { 
         data, 
@@ -8,7 +8,8 @@ const UniversalList =(
         horizontal, 
         loading, 
         onLoadMore, 
-        ListEmptyComponent 
+        ListEmptyComponent, 
+        headerComponent
     }
 )=>{
     return(
@@ -16,6 +17,10 @@ const UniversalList =(
             data=  {data}
             renderItem={renderItem}
             keyExtractor={(item, index) => item.id ? `${item.id}-${index}` : index.toString()}
+            ListHeaderComponent={headerComponent? ListHeaderComponent:
+                                    <View style={styles.loader}>
+                                       
+                                     </View>}
             horizontal={horizontal}
             showsHorizontalScrollIndicator={false}
            // onEndReached={onLoadMore}
@@ -30,7 +35,7 @@ const UniversalList =(
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 90,
+        paddingVertical: 10,
     }
 });
 
