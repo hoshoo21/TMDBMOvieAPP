@@ -51,6 +51,7 @@ export const mediaReducer = (state, action) => {
         } 
        
         case "SET_ACTOR_DETAILS":
+          console.log(action.payload.data);
        
         return{
             ...state,
@@ -65,6 +66,29 @@ export const mediaReducer = (state, action) => {
         
 
         } 
+      case 'SET_GENRE_RESULTS':
+        return {
+          ...state, 
+          genre :{
+            data :action.payload.data
+            
+          }
+        }
+        case 'SET_GENRE_MOVIES':
+          return {
+            ...state, 
+            genreMovies :{
+              loading: false,
+              data: {
+                ...state.search_results.data,
+                [action.payload.page]: action.payload.results,
+                total_pages: action.payload.total_pages,
+                total_results: action.payload.total_results,
+              },
+           
+              
+            }
+          }
          
       case "SET_SEARCH_RESULTS":
         return {

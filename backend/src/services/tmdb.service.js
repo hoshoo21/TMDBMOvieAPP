@@ -21,7 +21,7 @@ export const searchMovies =async(query,page)=>{
 
 export const getMovieCredits=async(movie_id)=>{
  // 'https://api.themoviedb.org/3/movie/840598/credits?language=en-US'
- console.log(`https://api.themoviedb.org/3/movie/${movie_id}/credits`);
+ console.log(`https://api.themoviedb.org/3/movie/${movie_id}/credits&include_video=true`);
     try{
         const {data}= await httpClient.get(`${BASE_URL}/movie/${movie_id}/credits`)
         return data;
@@ -51,6 +51,38 @@ export const getDetails = async(id )=>{
         return data;
     }
     catch (error){
+        console.log(error);
+    }
+}
+
+
+export const getSimilarMovies=async(id,page)=>{
+    //'https://api.themoviedb.org/3/movie/movie_id/similar?language=en-US&page=1'
+    try {
+        const {data} = await httpClient.get(`${BASE_URL}/movie/${movie_id}/similar?include_adult=true&language=en-US`)
+        return data;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+export const getGenreList = async ()=>{
+    try {
+        const {data} = await httpClient.get(`${BASE_URL}/genre/movie/list?language=en`)
+        return data;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+export const getGenreBasedMovies = async (genreId,page)=>{
+    try {
+        const {data} = await httpClient.get(`${BASE_URL}/discover/movie?include_adult=true&&with_genres=${genreId}&page=${page}&sort_by=vote_average.desc`)
+        return data;
+    }
+    catch(error){
         console.log(error);
     }
 }

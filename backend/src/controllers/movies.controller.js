@@ -1,4 +1,4 @@
-import {getDetails,searchMovies, getActorMovies, getMovieCredits} from '../services/tmdb.service.js';
+import {getDetails, getSimilarMovies,searchMovies, getGenreBasedMovies,getGenreList,getActorMovies, getMovieCredits} from '../services/tmdb.service.js';
 
 export const search = async(req,res, next)=>{
     try {
@@ -56,3 +56,36 @@ export const getActorDetail = async(req,res,next)=>{
     }
 }
 
+export const getSimilar = async (req,res,next)=>{
+  try{
+    const {id, page} = req.query ;
+    const similarMovies = await getSimilarMovies(id, page)
+    res.json(similarMovies);
+  }
+  catch(error){
+    console.log('error'+error);
+    next(error);
+  }
+}
+export const getGenres = async (req,res,next)=>{
+    try {
+        const genreData= await getGenreList();
+        res.json(genreData);
+    }
+    catch(error){
+        console.log('error'+error);
+        next(error);
+    }
+}
+
+export const getGenreMovies=async (req,res,next)=>{
+    try {
+        const {genreid, page} = req.query;
+        const moviesData = await getGenreBasedMovies(genreid,page);
+        res.json(moviesData);
+    }
+    catch(error){
+        console.log('error' + error);
+        next(error);
+    }
+}

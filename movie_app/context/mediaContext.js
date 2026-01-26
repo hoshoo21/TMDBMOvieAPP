@@ -12,6 +12,8 @@ const initialState = {
     error: null,
     },
     movie_details: {},
+    genres :[],
+    genreMoives :{},
     actor_detail :{},    
    
 };
