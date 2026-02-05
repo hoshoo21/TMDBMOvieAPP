@@ -1,5 +1,6 @@
 
 export const mediaReducer = (state, action) => {
+  console.log(action.type);
   switch (action.type) {
       case "SET_LOADING":
         return {
@@ -90,12 +91,13 @@ export const mediaReducer = (state, action) => {
             }
           }
           case 'SET_SIMILAR_MOVIES':
+            console.log(action.payload.results);
             return {
               ...state, 
-              simiarMovies :{
+              similarMovies :{
                 loading: false,
                 data: {
-                  ...state.search_results.data,
+                  ...state.similarMovies.data,
                   [action.payload.page]: action.payload.results,
                   total_pages: action.payload.total_pages,
                   total_results: action.payload.total_results,

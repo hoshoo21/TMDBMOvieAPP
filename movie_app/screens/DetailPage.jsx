@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useRef } from "react";
-import {View,Text,Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View,Text,Image, StyleSheet, FlatList,TouchableOpacity} from 'react-native';
 import { Badge } from "react-native-elements";
 import { MediaContext } from "../context/mediaContext";
 import { useMediaActions } from "../context/useMediaActions";
@@ -8,6 +8,7 @@ import UniversalList from "./Components/UniversalList";
 import { ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../styles/colors";
+import GenreMovieCard from "./Components/GenreMovieCard";
 const DetailPage=({route})=>{
     const {item} = route.params;
   
@@ -22,19 +23,26 @@ const DetailPage=({route})=>{
           searchCast(item.id);
           
           
+
         }
-          searchSimilar(item.id,pageRef.current );
+        console.log('fetching similar movies');
+        searchSimilar(item.id,pageRef.current );
+
      
        
-    },[item.id]);
-    console.log(state.simiarMovies);
-  const genres = state?.genre?.data.filter (genre => item.genre_ids?.includes(genre.id))
+    },[item]);
+  
+    const genres = state?.genre?.data.filter (genre => item.genre_ids?.includes(genre.id))
                     .map(ele => ele.name).join (" • ");
    
-    const onloadMore = ()=>{
+    const loadMore = ()=>{
       pageRef.current =pageRef.current +1;
       searchSimilar(item.id, pageRef.current);
     }
+    console.log("geting state of similar movies");
+    const similarMovies = Object.values(state.similarMovies?.data||[]).flat();
+    console.log("similar movies");
+    console.log(state.similarMovies);
     const rawCast =state.movie_details[item.id]?.cast || [];
     const rawCrew = state.movie_details[item.id]?.crew|| [];
     const directors = rawCrew.filter (person => person.known_for_department==="Directing");
@@ -42,7 +50,7 @@ const DetailPage=({route})=>{
       return rawCast.filter (person => person.known_for_department==="Acting");
     },[rawCast]) ;
     const loading = state.movie_details[item.id]?.loading;
-     console.log(genres)  
+    
     return (
       <ScrollView contentContainerStyle={styles.scollContainer}>
             <Image 
@@ -56,7 +64,6 @@ const DetailPage=({route})=>{
              <Text style={styles.title}> {genres} </Text>  
            
             <Text style={styles.releaseDate} >Release Year {new Date(item.release_date).getFullYear()}</Text>
-
             <UniversalList 
               data = {directors}
               horizontal={true}
@@ -106,7 +113,9 @@ const DetailPage=({route})=>{
                 </View>
               )}
               ></UniversalList>
-        </View>
+                
+          
+           </View>
         </ScrollView>
     )
 }

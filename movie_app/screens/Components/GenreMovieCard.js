@@ -15,7 +15,7 @@ const GenreMovieCard =({item, onPress})=>{
 
 
     return (
-        <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
+        <TouchableOpacity style={styles.card} onPress={()=>{onPress(item)}} activeOpacity={0.7}>
             <Image 
                 source={{uri:imageURL}}
                 style= {styles.poster}

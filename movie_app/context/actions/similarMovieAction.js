@@ -5,16 +5,14 @@ const BASE_URL = 'https://scabbardless-nell-fashionably.ngrok-free.dev';
 export const searchSimilar = async (dispatch, getState, id, page)=>{
 
     try {
-        console.log(id);
         console.log(`${BASE_URL}/api/movies/getsimilarmovies?page=${page}&id=${id}`);
 
         const res = await axios.get(`${BASE_URL}/api/movies/getsimilarmovies?page=${page}&id=${id}`);
         console.log(res.data);
-
         dispatch({type:'SET_SIMILAR_MOVIES', 
                     payload:{
                         page,
-                        simiilarMovies :res.data.results,
+                        results :res.data.results,
                        id:id,
 
                     }
