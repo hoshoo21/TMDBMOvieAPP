@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import {View, Text,Image, StyleSheet, TouchableOpacity} from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,StackActions } from "@react-navigation/native";
+import { MediaContext } from "../../context/mediaContext";
+import colors from "../../styles/colors";
 const ListItem = ({item})=>{
     const navigation =useNavigation();
+    const {state} = useContext(MediaContext);
+    
+    const genres = state?.genre?.data.filter (genre => item.genre_ids?.includes(genre.id))
+                    .map(ele => ele.name).join (" • ");
     return (
         <TouchableOpacity
             activeOpacity={0.8}
@@ -21,6 +27,9 @@ const ListItem = ({item})=>{
                   <Text style={styles.title} numberOfLines={2}>
                     {item.title || item.original_title || ''}
                   </Text>
+                  <Text style ={{color:colors.textPrimary}}>
+                    {genres}
+                  </Text >
                   <Text style={styles.rating}>
                     ⭐{item.vote_average|| 0} 
                   </Text>
@@ -39,10 +48,10 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         padding :10,
         marginVertical:5,
-        backgroundColor:'#fff',
+        backgroundColor: colors.primary,
         borderRadius:8,
         elevation:2,
-        shadowColor:'#000',
+        shadowColor: colors.secondary,
         shadowOffset:{width:0,height:1},
         shadowOpacity:0.2,
         shadowRadius:2
@@ -60,16 +69,16 @@ const styles = StyleSheet.create({
     title :{
         fontSize:16,
         fontWeight:'bold',
-        color :'#11182'
+        color : colors.textPrimary
     },
     rating :{
         fontSize:14,
-        color: "#F59E0B",
+        color: colors.textSecondary,
 
     },
     country:{
         fontSize:12,
-        color:"#6B7280"
+        color:colors.textSecondary
     }
     
 });

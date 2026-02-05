@@ -1,45 +1,88 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useRef } from "react";
 import {View,Text,Image, StyleSheet, TouchableOpacity} from 'react-native';
+import { Badge } from "react-native-elements";
 import { MediaContext } from "../context/mediaContext";
 import { useMediaActions } from "../context/useMediaActions";
 import { searchCast } from "../context/actions/castAction";
 import UniversalList from "./Components/UniversalList";
 import { ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import colors from "../styles/colors";
 const DetailPage=({route})=>{
     const {item} = route.params;
+  
     const {state} = useContext(MediaContext);
-    const {searchCast} = useMediaActions();
+    const {searchCast,searchSimilar} = useMediaActions();
+    const pageRef = useRef(1);
     const navigation = useNavigation();
     useEffect(()=>{
-        if (!state.movie_details?.cast){
+      
+      if (!state.movie_details?.cast){
+          console.log(item.id);
           searchCast(item.id);
           
           
         }
-
+          searchSimilar(item.id,pageRef.current );
+     
+       
     },[item.id]);
+    console.log(state.simiarMovies);
+  const genres = state?.genre?.data.filter (genre => item.genre_ids?.includes(genre.id))
+                    .map(ele => ele.name).join (" • ");
+   
+    const onloadMore = ()=>{
+      pageRef.current =pageRef.current +1;
+      searchSimilar(item.id, pageRef.current);
+    }
     const rawCast =state.movie_details[item.id]?.cast || [];
     const rawCrew = state.movie_details[item.id]?.crew|| [];
-    const directors = useMemo(()=>{
-      return rawCrew.filter (person => person.known_for_department==="Directing");
-    },[rawCrew]) ;
+    const directors = rawCrew.filter (person => person.known_for_department==="Directing");
     const actors = useMemo(()=>{
       return rawCast.filter (person => person.known_for_department==="Acting");
     },[rawCast]) ;
-    console.log(actors);
     const loading = state.movie_details[item.id]?.loading;
-    
+     console.log(genres)  
     return (
       <ScrollView contentContainerStyle={styles.scollContainer}>
             <Image 
                 source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`}}
                 style={styles.poster}
             />
-          <View style={styles.infoSection}>
+             <View style={styles.infoSection}>
        
             <Text style={styles.title} >{item.title}</Text>
             <Text style={styles.overview} >{item.overview}</Text>
+             <Text style={styles.title}> {genres} </Text>  
+           
+            <Text style={styles.releaseDate} >Release Year {new Date(item.release_date).getFullYear()}</Text>
+
+            <UniversalList 
+              data = {directors}
+              horizontal={true}
+              loading={loading}
+              renderItem={({item})=>(
+                <View style={styles.castAvatar}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={()=>navigation.navigate("ActorDetails", {item})}
+
+                  >
+                    <Image 
+                      source={{ uri: `https://image.tmdb.org/t/p/w300${item.profile_path}`}}
+                      style={styles.image}
+                      />
+                  </TouchableOpacity> 
+                  <TouchableOpacity>  
+                   <Text style={styles.name}>{item.name}</Text>
+                 
+                  </TouchableOpacity>
+                </View>
+              )}
+              >
+
+              </UniversalList>
+
             <UniversalList 
               data={actors}
               horizontal={true}
@@ -69,6 +112,22 @@ const DetailPage=({route})=>{
 }
 
 const styles =StyleSheet.create({
+  badgeStyle: {
+    position: 'absolute', // Position the badge over the child component
+    right: 10, // Adjust position as needed
+    top: 30,
+    backgroundColor: 'red',
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
     scrollContainer: {
       paddingBottom: 40, 
       backgroundColor: '#fff',
@@ -84,6 +143,11 @@ const styles =StyleSheet.create({
       },
       title: {
         fontSize: 22,
+        fontWeight: "bold",
+        marginVertical: 10,
+      },
+      releaseDate: {
+        fontSize: 16,
         fontWeight: "bold",
         marginVertical: 10,
       },

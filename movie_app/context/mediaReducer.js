@@ -89,7 +89,22 @@ export const mediaReducer = (state, action) => {
               
             }
           }
-         
+          case 'SET_SIMILAR_MOVIES':
+            return {
+              ...state, 
+              simiarMovies :{
+                loading: false,
+                data: {
+                  ...state.search_results.data,
+                  [action.payload.page]: action.payload.results,
+                  total_pages: action.payload.total_pages,
+                  total_results: action.payload.total_results,
+                },
+             
+                
+              }
+            }
+            
       case "SET_SEARCH_RESULTS":
         return {
           ...state,

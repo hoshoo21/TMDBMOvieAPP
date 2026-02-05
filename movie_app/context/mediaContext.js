@@ -15,7 +15,7 @@ const initialState = {
     genres :[],
     genreMoives :{},
     actor_detail :{},    
-   
+    simiarMovies:{},
 };
 
 export const MediaContext =createContext(initialState);

@@ -21,9 +21,10 @@ export const searchMovies =async(query,page)=>{
 
 export const getMovieCredits=async(movie_id)=>{
  // 'https://api.themoviedb.org/3/movie/840598/credits?language=en-US'
- console.log(`https://api.themoviedb.org/3/movie/${movie_id}/credits&include_video=true`);
+ console.log(`https://api.themoviedb.org/3/movie/${movie_id}/credits&append_to_response=videos&include_video=true`);
     try{
         const {data}= await httpClient.get(`${BASE_URL}/movie/${movie_id}/credits`)
+        
         return data;
     }
     catch(error){
@@ -56,7 +57,7 @@ export const getDetails = async(id )=>{
 }
 
 
-export const getSimilarMovies=async(id,page)=>{
+export const getSimilarMovies=async(movie_id,page)=>{
     //'https://api.themoviedb.org/3/movie/movie_id/similar?language=en-US&page=1'
     try {
         const {data} = await httpClient.get(`${BASE_URL}/movie/${movie_id}/similar?include_adult=true&language=en-US`)

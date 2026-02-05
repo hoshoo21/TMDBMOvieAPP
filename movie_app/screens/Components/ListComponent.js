@@ -1,6 +1,7 @@
 import React from "react";
 import { View, FlatList, StyleSheet,ActivityIndicator,  Text } from "react-native";
 import ListItem from "./ListItem";
+import colors from "../../styles/colors";
 const ListComponent = ({ movies, loadMore,loading ,style, endReached}) => {
     
     return (
@@ -11,7 +12,7 @@ const ListComponent = ({ movies, loadMore,loading ,style, endReached}) => {
           onEndReached={loadMore}
           onEndReachedThreshold={0.5}
           ListFooterComponent={() => {
-            if (loading) return <ActivityIndicator style={{ margin: 15 }} size="large" color="#0000ff" />;
+            if (loading) return <ActivityIndicator style={{ margin: 15 }} size="large" color={colors.textPrimary} />;
             if (endReached && movies.length > 0) return <Text style={{ textAlign: "center", padding: 10, color: "#888" }}>End of results</Text>;
             return null;
             }}
@@ -19,7 +20,7 @@ const ListComponent = ({ movies, loadMore,loading ,style, endReached}) => {
            return( <View
               style={[
                 styles.listItem,
-                { backgroundColor: index % 2 === 0 ? "#FFFFFF" : "#F3F4F6" },
+                { backgroundColor: index % 2 === 0 ? colors.primary:colors.primary },
               ]}
             >
                 <ListItem item ={item} />
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     fontSize: 16,
-    color: "#111827",
+    color: colors.primary,
   },
 });
 

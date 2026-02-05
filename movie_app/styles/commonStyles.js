@@ -32,11 +32,11 @@ export const commonStyles = StyleSheet.create({
     },
     sectionWrapper: {
         marginBottom: 10,
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.primary,
         borderRadius: 8,
         overflow: 'hidden', // Ensures content doesn't bleed over rounded corners
         borderWidth: 1,
-        borderColor: colors.border, // Light gray border
+        borderColor: colors.secondary, // Light gray border
         marginHorizontal: 15,
     },  
     title: {

@@ -7,6 +7,7 @@ import { useMediaActions } from "../context/useMediaActions";
 import { commonStyles } from "../styles/commonStyles";
 import GenericChip from "./Components/GenericChip";
 import { useNavigation } from "@react-navigation/native";
+import colors from "../styles/colors";
 const ExpandableSections =({genres, countries })=>{
 
   
@@ -26,7 +27,6 @@ const HomePage = ()=>{
     
         { id: '2', title: 'Contries', data: state.genre? state.genre: [], type: 'text' },  
     ];
-    console.log(sections);
     const toggleSection = (id)=>{
         setExpandedSection(expandedSection == id?null : id);
 
@@ -39,7 +39,7 @@ const HomePage = ()=>{
             <View style={commonStyles.sectionWrapper}>
                 <TouchableOpacity 
                 activeOpacity={0.7}
-                style={[commonStyles.header, isOpen && { backgroundColor: '#f3f4f6' }]}
+                style={[commonStyles.header, isOpen && { backgroundColor:colors.primary }]}
                 onPress={()=>toggleSection(item.id)}
 >
                     <Text style={commonStyles.headerText} > {item.title}</Text>
@@ -70,13 +70,16 @@ const HomePage = ()=>{
         )
     };
     return (
-     <FlatList 
-        data={sections}
-        renderItem={renderSection}
-        keyExtractor={(item)=> item.id.toString()}
-        contentContainerStyle={{paddingBottom:20}}   
-     />
+        <View style={{backgroundColor:colors.primary, flex:1}}>
+                    <FlatList 
+                data={sections}
+                renderItem={renderSection}
+                keyExtractor={(item)=> item.id.toString()}
+                contentContainerStyle={{paddingBottom:20}}   
+            />
 
+        </View>   
+    
     )
 }
 

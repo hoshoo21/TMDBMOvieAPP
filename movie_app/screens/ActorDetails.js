@@ -5,6 +5,7 @@ import { MediaContext } from "../context/mediaContext";
 import { useMediaActions } from "../context/useMediaActions";
 import { searchActor } from "../context/actions/actorAction";
 import { commonStyles } from "../styles/commonStyles";
+import colors from "../styles/colors";
 import ListItem from "./Components/ListItem";
 const ActorDetails=({route})=>{
     const{item} = route.params;
@@ -22,39 +23,41 @@ const ActorDetails=({route})=>{
    
     
     const details = state.actor_detail[item.id];
-    console.log(details);
+    const renderHeader = ()=>(
+        <View style={{paddingBottom:40}}>
+        <Image style ={commonStyles.poster}
+            source= {{uri:`https://image.tmdb.org/t/p/w300${details.details.profile_path}`}}
+            />  
+        <Text style={commonStyles.headerText} >{details.details.name } </Text>
+        <Text style={commonStyles.bodyText}> {details.details.biography}  </Text>
+        <Text style={{ color:colors.textPrimary, fontWeight: 'bold', marginTop: 20 }}>Known for</Text>
+        </View>
+   
+    )
     return (
           
-        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+        <View style={{ flex: 1, backgroundColor:colors.primary}}>
                   
                                 
                 {details?
-                            <View style={commonStyles.container}>
-                            <Image style ={commonStyles.poster}
-                                source= {{uri:`https://image.tmdb.org/t/p/w300${details.details.profile_path}`}}
-                                />  
-                            <Text style={commonStyles.headerText} >{details.details.name } </Text>
-                            <Text style={commonStyles.bodyText}> {details.details.biography}  </Text>
-                            <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Known for</Text>
-                         
                          
                                  <UniversalList 
                                 data={details.movies.results[0]["known_for"]}
                                 horizontal={false}
                               
-                                
+                                ListHeaderComponent = {renderHeader}
                                 renderItem={({ item }) => (
 
                                        <ListItem item={item}/>// Replace with your Movie Card
                                 )}
                             />  
                     
-                    </View>
+                    
                         
-                    :<View></View>
+                    : <View ><Text>Loading...</Text></View>
                 }
-        </View>
-    
+       
+                </View>
     )
 
 

@@ -15,7 +15,6 @@ const GenreMovies =({route})=>{
     const pageRef = useRef(1);
 
     useEffect(()=>{
-        console.log('fethcing movies by genre')
         getMoviesByGenre(id, pageRef.current);
     },[]);
 
@@ -26,9 +25,8 @@ const GenreMovies =({route})=>{
     const allMovies = Object.values(state.genreMovies?.data||[]).flat();
   
     return (
-     <SafeAreaView style={commonStyles.container}>
         <View style={styles.container}>
-            <Text style={ commonStyles.title}>{name}  Movies</Text> 
+            <Text style={[commonStyles.title,{textAlign: 'center', width: '100%'}]}>{name}  Movies</Text> 
         
             <FlatList
                 data = {allMovies}
@@ -40,13 +38,13 @@ const GenreMovies =({route})=>{
                 )}
             />
          </View>
-    </SafeAreaView>
     );
 }
 
 const styles= StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor:colors.primary        
       },
       
 });

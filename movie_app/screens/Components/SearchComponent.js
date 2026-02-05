@@ -2,7 +2,7 @@ import react, { useState } from "react";
 import { EvilIcons } from '@expo/vector-icons';
 import { Input, Button, Text } from 'react-native-elements';
 import { StyleSheet, View } from "react-native"; 
-import { colors } from "../../utils/Constants";
+import  colors  from "../../styles/colors";
 const SearchComponent=({onSearch})=>{
     const [searchContent, setSearchContent]= useState("");
 
@@ -31,14 +31,14 @@ const SearchComponent=({onSearch})=>{
 const styles = StyleSheet.create({
     searchContainer: {
         padding: 10,
-        backgroundColor: "#F5F7FA",
+        backgroundColor: colors.primary 
       },
     searchText: {
         fontSize: 16,
         paddingHorizontal: 10,
       },
       inputBox: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.white,
         borderRadius: 8,
         borderBottomWidth: 0,
         paddingHorizontal: 5,

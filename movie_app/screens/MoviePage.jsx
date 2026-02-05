@@ -5,6 +5,7 @@ import SearchComponent from "./Components/SearchComponent";
 import ListComponent from "./Components/ListComponent";
 import { MediaContext } from "../context/mediaContext";
 import { useMediaActions } from "../context/useMediaActions";
+import colors from "../styles/colors";
 const MoviePage =(props)=>{
     const [query,setQuery]= useState("");
     const {state,dispatch} = useContext(MediaContext);
@@ -17,10 +18,7 @@ const MoviePage =(props)=>{
    
     const allMovies = Object.values(state.search_results.data).flat();
 
-    allMovies.forEach(movie => {
-   //     console.log(movie.title);
-    });
-
+  
     const search_results = Object.keys(state.search_results.data)
     .sort((a, b) => Number(a) - Number(b)) // Forces numerical order: 1, 2, 3...
     .flatMap((pageKey) => state.search_results.data[pageKey]);
@@ -70,6 +68,7 @@ const MoviePage =(props)=>{
 const styles = StyleSheet.create({
     pageContainer:{
         flex:1,
+        backgroundColor:colors.primary,
         marginTop:5,
         padding:5
     }
